@@ -8,6 +8,7 @@ RUN go mod download
 # Build artifacts
 WORKDIR /go/src/github.com/abatilo/contract-ai
 COPY ./cmd ./cmd
+COPY ./pkg ./pkg
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o /go/bin/contract-ai cmd/contract-ai.go
 
 FROM scratch

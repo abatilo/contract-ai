@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "contract-ai.fullname" . }}
+  name: {{ include "nlpservice.fullname" . }}
   labels:
-    {{- include "contract-ai.labels" . | nindent 4 }}
+    {{- include "nlpservice.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "contract-ai.selectorLabels" . | nindent 6 }}
+      {{- include "nlpservice.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "contract-ai.selectorLabels" . | nindent 8 }}
+        {{- include "nlpservice.selectorLabels" . | nindent 8 }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-      serviceAccountName: {{ include "contract-ai.serviceAccountName" . }}
+      serviceAccountName: {{ include "nlpservice.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -29,7 +29,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: 9090
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

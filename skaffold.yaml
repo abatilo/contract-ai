@@ -1,0 +1,38 @@
+apiVersion: skaffold/v2beta2
+kind: Config
+build:
+  artifacts:
+  - image: abatilo/contract-ai
+    context: .
+  - image: abatilo/nlpservice
+    context: ./nlp-service
+profiles:
+  - name: chopper
+    deploy:
+      kubeContext: chopper.abatilo.cloud
+      helm:
+        releases:
+        - name: contract-ai
+          chartPath: helm/contract-ai
+          valuesFiles:
+          - helm/contract-ai/values-chopper.yaml
+          values:
+            image.repository: abatilo/contract-ai
+    activation:
+      - kubeContext: chopper.abatilo.cloud
+deploy:
+  statusCheckDeadlineSeconds: 600
+  helm:
+    releases:
+    - name: contract-ai
+      chartPath: helm/contract-ai
+      valuesFiles:
+      - helm/contract-ai/values.yaml
+      values:
+        image.repository: abatilo/contract-ai
+    - name: nlpservice
+      chartPath: helm/nlpservice
+      valuesFiles:
+      - helm/nlpservice/values.yaml
+      values:
+        image.repository: abatilo/nlpservice

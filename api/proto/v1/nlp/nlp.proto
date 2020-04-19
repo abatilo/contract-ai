@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package nlp;
+
+service NLPService {
+  rpc AskQuestion(AskQuestionRequest) returns (AskQuestionResponse);
+  rpc AskQuestions(AskQuestionsRequest) returns (AskQuestionsResponse);
+}
+
+message Corpus {
+  string body = 1;
+};
+
+message Question {
+  string body = 1;
+};
+
+message Answer {
+  string body = 1;
+};
+
+message AskQuestionRequest {
+  Corpus corpus = 1;
+  Question question = 2;
+};
+
+message AskQuestionResponse {
+  Answer answer = 1;
+  Question question = 2;
+};
+
+message AskQuestionsRequest {
+  Corpus corpus = 1;
+  repeated Question questions = 2;
+};
+
+message AskQuestionsResponse {
+  repeated Answer answer = 1;
+};
