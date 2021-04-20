@@ -55,7 +55,7 @@ pluggy==0.13.1
 poetry==0.12.17
 preshed==2.0.1
 protobuf==3.11.3
-py==1.8.1
+py==1.10.0
 Pygments==2.6.1
 pylev==1.3.0
 pyparsing==2.4.5
